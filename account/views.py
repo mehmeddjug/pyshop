@@ -5,7 +5,6 @@ from account.forms import AccountForm
 from account.models import Account
 
 
-# Register account
 def register_account(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
@@ -16,7 +15,7 @@ def register_account(request):
         form = AccountForm()
     return render(request, 'create_account.html', {'form': form})
 
-# List accounts
+
 def get_accounts(request):
     accounts = Account.active.all()
     return render(
@@ -25,18 +24,18 @@ def get_accounts(request):
         {'accounts': accounts}
     )
 
-# Get account by primary key
-def get_account_by_pk(request, pk):
-    account = get_object_or_404(Account.active, pk=pk)
+
+def get_account_by_id(request, id):
+    account = get_object_or_404(Account.active, pk=id)
     return render(
         request,
         'get_account_by_id.html',
         {'account': account}
     )
 
-# Update account
-def update_account_by_pk(request, pk):
-    account = get_object_or_404(Account.active, pk=pk)
+
+def update_account_by_id(request, id):
+    account = get_object_or_404(Account.active, pk=id)
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=account)
         if form.is_valid():
@@ -46,28 +45,28 @@ def update_account_by_pk(request, pk):
         form = AccountForm(instance=account)
     return render(request, 'create_account.html', {'form': form})
 
-# Delete account
-def delete_account_by_pk(request, pk):
-    account = get_object_or_404(Account.active, pk=pk)
+
+def delete_account_by_id(request, id):
+    account = get_object_or_404(Account.active, pk=id)
     if request.method == 'POST':
         account.is_deleted = True
         account.save()
-        return redirect('account_list')
+        return redirect('get_accounts')
     return render(
         request,
         'delete_account.html',
         {'account': account}
     )
 
-# Restore account
-def restore_account(request, pk):
-    account = get_object_or_404(Account, pk=pk)
+
+def restore_account(request, username):
+    account = get_object_or_404(Account, username=username)
     if request.method == 'POST':
         account.is_deleted = False
         account.save()
-        return redirect('account_list')
+        return redirect('get_accounts')
     return render(
         request,
-        'accounts/account_confirm_restore.html',
+        'restore_account.html',
         {'account': account}
     )
