@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.shortcuts import get_object_or_404, redirect, render
 
 from account.forms import AccountForm
