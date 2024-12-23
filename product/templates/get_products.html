@@ -1,0 +1,22 @@
+<!-- accounts/templates/accounts/account_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    <a href="{% url 'create_product' %}">Create New Product</a>
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.name }} - {{ product.price }}
+                <a href="{% url 'update_product' product.id %}">Edit</a> |
+                <a href="{% url 'delete_product' product.id %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
