@@ -24,8 +24,8 @@ def get_accounts(request):
     )
 
 
-def get_account_by_id(request, id):
-    account = get_object_or_404(Account.active, pk=id)
+def get_account_by_id(request, account_id):
+    account = get_object_or_404(Account.active, pk=account_id)
     return render(
         request,
         'get_account_by_id.html',
@@ -33,8 +33,8 @@ def get_account_by_id(request, id):
     )
 
 
-def update_account_by_id(request, id):
-    account = get_object_or_404(Account.active, pk=id)
+def update_account_by_id(request, account_id):
+    account = get_object_or_404(Account.active, pk=account_id)
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=account)
         if form.is_valid():
@@ -45,8 +45,8 @@ def update_account_by_id(request, id):
     return render(request, 'create_account.html', {'form': form})
 
 
-def delete_account_by_id(request, id):
-    account = get_object_or_404(Account.active, pk=id)
+def delete_account_by_id(request, account_id):
+    account = get_object_or_404(Account.active, pk=account_id)
     if request.method == 'POST':
         account.is_deleted = True
         account.save()
